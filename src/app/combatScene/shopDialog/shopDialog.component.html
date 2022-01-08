@@ -1,0 +1,118 @@
+
+<div class="cinzel" style="width: 100% ; justify-content: flex-end ; display: flex ; cursor: pointer" (click)="close()">
+X
+</div>
+
+<div  style="width: 100% ; display: flex; justify-content: center ; align-items: center ; flex-direction: column">
+
+  <div class="cinzel" style="font-size: 20px; margin-bottom: 10px">DREIFUS SHOP</div>
+
+  <img style="height: 100px; width: 100px; border-radius: 200px ; border: 9px solid black;" src="../../../assets/salesman.jpeg">
+
+</div>
+
+<div class="cinzel" style="width: 100% ; display: flex; justify-content: center ; margin-top: 20px">
+  Your current gold <span class="cinzel" style="font-size: 15px">{{gold}} </span>
+</div>
+
+<div style="display: flex; padding: 30px ; width: 95% ; justify-content: center">
+
+  <div class="container">
+    
+    <div style="height: 100px">
+      <img class="potimg" src="../../assets/redpotion.jpg">
+    </div>
+
+    <div class="cinzel" style="height: 100px ; font-size: 12px">
+      "Surely the other guy's hand got severly injured aswell."
+    </div>
+
+    <div style="height: 55px;
+    font-size: 13px;
+    text-align: center;">
+      <span class="cinzel" style="color: green">Heals</span>
+      <span class="cinzel">you for</span>
+      <span class="cinzel">7HP</span>
+    </div>
+
+    <div class="cinzel but" (click)="buy('redpot')">
+     BUY FOR {{redpotValue}} <img style="width: 10px; height: 10px ; margin-left: 5px ; margin-top: 5px;" src="../../assets/coins.png">
+    </div>
+  </div>
+
+  <div class="container">
+    
+    <div style="height: 100px">
+      <img class="potimg" src="../../assets/bluepot.jpg">
+    </div>
+
+    <div class="cinzel" style="height: 100px ; font-size: 12px">
+      "Elves have a lot of these on their hometown, they won't mind we taking a little from them, do they?"
+    </div>
+
+    <div style="height: 55px;
+    font-size: 13px;
+    text-align: center;">
+      <span class="cinzel">Increases your</span>
+      <span class="cinzel" style="color: rgb(115, 115, 247)">mana</span>
+      <span class="cinzel">in 2</span>
+    </div>
+
+    <div class="cinzel but" (click)="buy('bluepot')">
+      BUY FOR {{bluepotValue}} <img style="width: 10px; height: 10px ; margin-left: 5px ; margin-top: 5px;" src="../../assets/coins.png">
+    </div>
+  </div>
+
+  <div class="container">
+    
+    <div style="height: 100px">
+      <img class="potimg" src="../../assets/speedpot.jpg">
+    </div>
+
+    <div class="cinzel" style="height: 100px ; font-size: 12px">
+      "A little bit of the rare mordegus flower mixed with some stuff that might not be completely legal."
+    </div>
+
+    <div style="height: 55px;
+    font-size: 13px;
+    text-align: center;">
+      <span class="cinzel">Increases your</span>
+      <span class="cinzel" style="color: rgb(247, 161, 115)">speed</span>
+      <span class="cinzel">by 50%</span>
+    </div>
+
+    <div class="cinzel but" (click)="buy('speedpot')">
+      BUY FOR {{speedpotValue}} <img style="width: 10px; height: 10px ; margin-left: 5px ; margin-top: 5px;" src="../../assets/coins.png">
+    </div>
+
+  </div>
+
+  <div class="container">
+    
+    <div style="height: 100px">
+      <img class="potimg" src="../../assets/strongpot.jpg">
+    </div>
+
+    <div class="cinzel" style="height: 100px ; font-size: 12px">
+      "Safely tested on dwarfs."
+    </div>
+
+    <div style="height: 55px;
+    font-size: 13px;
+    text-align: center;">
+      <span class="cinzel">Your damaging spells deal +2</span>
+      <span class="cinzel" style="color: rgb(243, 70, 70)">damage</span>
+    </div>
+    
+
+    <div class="cinzel but" (click)="buy('damagepot')">
+      BUY FOR {{damagepotValue}} <img style="width: 10px; height: 10px ; margin-left: 5px ; margin-top: 5px;" src="../../assets/coins.png">
+    </div>
+
+
+  </div>
+
+
+
+
+</div>

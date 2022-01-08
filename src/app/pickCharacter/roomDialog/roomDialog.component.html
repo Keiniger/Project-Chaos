@@ -1,0 +1,37 @@
+<div style="display: flex ; justify-content: center ; align-items: center">
+
+  <div *ngIf="data.type == 'create'"
+    style="display: flex ; justify-content: center ; align-items: center ; flex-direction: column">
+
+    <div class="cinzel" style="font-size: 16px ; color: white">
+      Insert room name
+    </div>
+
+    <input [(ngModel)]="roomName">
+
+    <mat-checkbox [(ngModel)]="isPrivate" [color]="'black'" style="margin-top: 20px ; margin-bottom: 10px"> 
+      <span class="cinzel">is private</span></mat-checkbox>
+
+
+      <div class="cinzel but" style="margin-top: 10px" (click)="closeAndCreate()">
+        create
+      </div>
+
+  </div>
+
+
+  <div *ngIf="data.type == 'join'"
+    style="display: flex ; justify-content: center ; align-items: center ; flex-direction: column">
+
+    <div class="cinzel" style="font-size: 16px ; color: white">
+      Insert room id
+    </div>
+    <input [(ngModel)]="roomToJoin">
+    <div class="cinzel but" style="margin-top: 10px" (click)="closeAndJoin()">
+      Join
+    </div>
+
+  </div>
+
+
+</div>

@@ -1,0 +1,358 @@
+<div *ngIf="loading">
+  loading
+</div>
+
+<div *ngIf="!loading">
+
+  <audio src="../assets/NonCopy.mp3" autoplay></audio>
+
+  <div
+    style="width: 100% ; height: 100% ; display: flex ; align-items: center; justify-content: center ; align-items: center; background: black">
+    <img src="../../assets/back3.jpeg" class="background">
+  </div>
+
+
+  <div style="display: flex; justify-content: center">
+
+    <div style=" display: flex; justify-content: center ; height: 40px; color: white ; position: absolute;top: 10px;left: 50vw;">
+      {{dayCycle}}
+    </div>
+
+    <div style="width: 95% ; height: 47.5vh ; position: absolute ; top: 20px ; display: flex;">
+
+      <div style="display: flex ; flex-direction: column ; align-items: center;margin-top: 10px; width: 15%">
+        <img class="player-pic" [src]="enemy.picture" style="margin-top: 10px">
+        <div class="dancing chip" style="margin-top: -30px">
+          {{enemy.chealth}}
+        </div>
+
+        <div class="popup-enemy enemypopupAnim cinzel" *ngIf="enemyDamagePopUp"> - {{enemyDamagePopUp}}</div>
+
+        <div class="enemyMsg" style="margin-bottom: 20px; display: flex;
+      flex-direction: column;
+      align-items: center;">
+          <div class="arrow-up">
+
+          </div>
+
+          <div class="merry "
+            style="background: rgb(31, 31, 31 , 0.48) ; padding: 20px ; border: 0.5px solid #80808066 ; color: white ; text-shadow: 2px 2px #000">
+            We'll see about that.
+          </div>
+
+        </div>
+
+      </div>
+
+      <div style="width: 70%">
+
+        <div style="width: 100%; height: 185px ; margin-top: 25px; display: flex;margin-left: 25px;">
+          <div *ngFor="let ab of enemy.abilities">
+            <div class="example-box"
+              style="background: linear-gradient(0deg, #000 0%, #b42323 100%); border: 5px #000000b5 solid ; cursor: default">
+              <img style="width: 70px ; height: 70px ; opacity: 0.1" src="../assets/floor.png">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <div style="width: 95% ; height: 47.5vh ; position: absolute ; top: 50vh ; display: flex">
+
+      <div
+        style="display: flex; justify-content: flex-end ; flex-direction: column ; align-items: center ;margin-bottom: 10px; width: 15% ; margin-right: 10px">
+
+        <div class="msg" style="margin-bottom: 20px; display: flex;
+      flex-direction: column;
+      align-items: center;">
+          <div class="merry"
+            style="background: rgb(31, 31, 31 , 0.48) ; padding: 20px ; border: 0.5px solid #80808066 ; color: white ; text-shadow: 2px 2px #000">
+            Your transgressions are getting punished!
+          </div>
+          <div class="arrow-down">
+          </div>
+        </div>
+
+        <div class="popup-player playerpopupAnim cinzel" *ngIf="playerDamagePopUp">- {{playerDamagePopUp}}</div>
+
+        <div class="dancing chip" style="margin-bottom: -30px">
+          {{player.chealth}}
+        </div>
+        <img class="player-pic" [src]="player.picture" style="margin-bottom: 10px">
+      </div>
+
+
+      <div style="display: flex;align-items: flex-end; width: 70%">
+
+        <div
+          style="width: 100% ; display: flex ; flex-direction: column; justify-content: center ; align-items: center ; margin-bottom: 20px">
+
+          <div *ngIf="waitingForEnemy"
+            style="display: flex; align-items: center ; flex-direction: column ; margin-bottom: 70px;">
+            <img style="width: 130px ; height: 80px" src="../assets/loader.gif">
+            <h1 class="cinzel" style="color: white">
+              Waiting for enemy...
+            </h1>
+          </div>
+
+          <div *ngIf="showingTurns" style="margin-bottom: 10px;">
+
+            <div style="width: 100% ; display: flex ; flex-direction: column ; align-items: center">
+
+              <div style="margin: 15px ; display: flex;
+            align-items: center;
+            flex-direction: column;">
+
+                <div [ngClass]="{'attackEnemy': typeEvent == 'damage' && isPlayer , 
+              'attackPlayer': typeEvent == 'damage' && !isPlayer,
+              'movement': typeEvent == 'status' || typeEvent == 'heal',
+               'won': typeEvent == 'won'
+              }">
+
+                  <img style="width: 120px;
+                  height: 120px;
+                  border-radius: 200px;
+                  border: 3px solid #020202" src="{{currentShow.picture}}">
+
+                  <img *ngIf="currentStatus" style="width: 50px;
+                  height: 50px;
+                  border-radius: 100px;
+                  border: 6px solid #020202; margin-left: -35px;
+                  background: black;" src="{{currentStatus.image}}">
+                </div>
+
+                <div class="cinzel" style="width: 100%;
+                background: #000000bf;
+                padding: 20px;
+                border-radius: 18px;
+                position: relative;
+                top: 38px;
+                color: white;
+                display: flex;
+                justify-content: center;
+                width: 350">
+                  {{msgEvent}}
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="fadeIn example-container"
+            style="margin-bottom: 10px; border: 5px #00000080 solid; border-radius: 25px; padding: 8px ; background: #0000008f;"
+            [ngClass]="waitingForEnemy || showingTurns? 'noShow' : ''">
+
+            <div cdkDropList #todoList="cdkDropList" cdkDropListOrientation="horizontal" [cdkDropListData]="toUse"
+              [cdkDropListConnectedTo]="[doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
+              <div class="example-box" *ngFor="let item of toUse" cdkDrag>
+                <div style="width: 100%" (mouseover)="openTooltip(item,this)" (mouseleave)="closeTooltip(item,this)">
+
+                  <div><img style="width: 30px;
+                  height: 30px;
+                  border: 5px black solid;
+                  border-radius: 25px;" src="{{item.image}}"></div>
+
+                  <div class="cinzel" style="font-size: 13px ; word-spacing: 3px ; color: white ; height: 50px ; display: flex;
+                justify-content: center;
+                align-items: center;">
+                    {{item.name.toUpperCase()}}</div>
+
+                  <div style="display: flex ; width: 100%">
+
+                    <div style="width: 100%; display: flex; justify-content: center ; margin-top: 9px;">
+                      <div class=" tear">
+                        <div class="cinzel" style="transform: rotate(45deg);
+                      margin: 5px ; font-size: 25px; color: white;">
+                          {{item.cost}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--div style="color: red; font-size: 10px" *ngIf="item.current_cooldown > 0">I'm on cooldown</div-->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tear fadeIn" *ngIf="!waitingForEnemy && !showingTurns" style="width: 65px ; height: 65px; border: black solid 4px ; margin-top: -40px ; margin-bottom: 5px ; background: rgb(33,41,79);
+          background: radial-gradient(circle, rgb(41, 48, 80) 0%, rgb(4, 55, 221) 100%);">
+            <div class="cinzel" style="transform: rotate(45deg); font-size: 22px;color: white; margin-top: 21px;font-weight: 600; 
+          font-weight: 600;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center; ">
+              {{totalAbilityCost()}} / {{player.ap}}
+            </div>
+          </div>
+
+
+          <div *ngIf="showInfo">
+            <div
+              style="padding: 25px ; width: 50vw ; height: 70px; background: black ; opacity: 0.7 ; color: white ; margin-bottom: 10px ; display: flex ; align-items: center">
+              <div>
+                <img style="width: 60px ; height: 60px ; margin-right: 20px" src="{{showInfo.image}}">
+              </div>
+              <div>
+                <div class="cinzel" style="font-size: 20px">
+                  {{showInfo.name}}
+                </div>
+                <div style="font-size: 15px">
+                  <span class="cinzel">Cooldown: {{showInfo.cooldown}}</span> <span class="cinzel"
+                    style="margin-left: 20px">Cost: {{showInfo.cost}}</span> <span class="cinzel"
+                    style="margin-left: 20px">Priority: {{showInfo.priority}}</span>
+                </div>
+                <div style="font-size: 15px">
+                  <span class="cinzel">{{showInfo.description}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!showInfo">
+            <div
+              style="padding: 25px ; width: 50vw ; height: 70px; background: none ; opacity: 0.7 ; color: white ; margin-bottom: 10px ; display: flex ; align-items: center">
+
+            </div>
+          </div>
+
+
+          <div class="example-container">
+
+            <div cdkDropList #doneList="cdkDropList" cdkDropListOrientation="horizontal"
+              [cdkDropListData]="allAbilities" [cdkDropListConnectedTo]="[todoList]" class="example-list"
+              (cdkDropListDropped)="drop($event)">
+
+              <div *ngFor="let item of allAbilities">
+
+                <div class="example-box" [cdkDragDisabled]="item.current_cooldown > 0" cdkDrag
+                  [ngClass]="item.current_cooldown > 0 ? 'disabledCard' : null">
+
+                  <div *ngIf="item.current_cooldown == 0 || !item.current_cooldown">
+                    <div style="width: 100%" (mouseover)="openTooltip(item,this)"
+                      (mouseleave)="closeTooltip(item,this)">
+
+                      <div><img style="width: 30px;
+                      height: 30px;
+                      border: 5px black solid;
+                      border-radius: 25px;" src="{{item.image}}"></div>
+
+                      <div class="cinzel" style="font-size: 13px ; word-spacing: 3px ; color: white ; height: 50px ; display: flex;
+                    justify-content: center;
+                    align-items: center;">
+                        {{item.name.toUpperCase()}}</div>
+
+                      <div style="display: flex ; width: 100%">
+
+                        <div style="width: 100%; display: flex; justify-content: center ; margin-top: 9px;">
+                          <div class=" tear">
+                            <div class="cinzel" style="transform: rotate(45deg);
+                          margin: 5px ; font-size: 25px; color: white;">
+                              {{item.cost}}
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="item.current_cooldown > 0">
+
+                    <div style="width: 100%" (mouseover)="openTooltip(item,this)"
+                      (mouseleave)="closeTooltip(item,this)">
+
+                      <div><img style="width: 30px;
+                      height: 30px;
+                      border: 5px black solid;
+                      border-radius: 25px;" src="{{item.image}}"></div>
+
+                      <div class="cinzel" style="font-size: 13px ; word-spacing: 3px ; color: white ; height: 50px ; display: flex;
+                    justify-content: center;
+                    align-items: center;">
+                        {{item.name.toUpperCase()}}</div>
+
+                      <div style="display: flex ; width: 100%">
+
+                        <div style="width: 100%; display: flex; justify-content: center ; margin-top: 9px;">
+                          <img style="width: 30px;
+                        height: 30px;
+                        opacity: 0.2;
+                        margin-left: 10px;
+                        position: relative;
+                        top: -5px;" src="../assets/clock.png">
+                          <span class="cinzel" style="color: white ; position: relative ; left: -18px;
+                        font-size: 22px;
+                        top: 2px;">{{item.current_cooldown}}</span>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+                </div>
+
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="display: flex ; align-items: flex-end; margin-bottom: 80px">
+
+        <button class='button' (click)="playTurn()" [disabled]="totalAbilityCost() > player.ap || isOver">
+          <div class='line'></div>
+          <div class='line'></div>
+          <div class='line'></div>
+          <div class='line'></div>
+          <div class='line'></div>
+          <div class='line'></div>
+          <span>PLAY TURN</span>
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+    <div style="position: absolute;
+  left: 85vw;
+  max-height: 571px;
+  top: 13vh;
+  overflow-y: scroll;
+  width: 14%;">
+
+      <div *ngFor="let turn of generateTurnList()">
+
+        <div
+          style="padding: 10px ; font-size: 20px ; background: rgba(0, 0, 0, 0.5); font-weight: 600 ; margin-top: 10px ; margin-bottom: 10px ; color: white">
+          Turn {{turn}}
+        </div>
+        <div *ngFor="let action of getLogTurn(turn)" style="font-size: 11px; color: white ; background: #0000002b;
+        padding: 8px;">
+          {{action.text}}
+        </div>
+
+      </div>
+
+      <div #end style="height: 1px">
+
+      </div>
+
+    </div>
+
+  </div>

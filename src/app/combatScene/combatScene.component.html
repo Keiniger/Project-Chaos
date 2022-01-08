@@ -1,0 +1,452 @@
+<div
+  style="width: 100% ; height: 100% ; display: flex ; align-items: center; justify-content: center ; align-items: center; background: black">
+  <img *ngIf="dayCycle == 'night'" src="../../assets/back4.png" class="background">
+  <img *ngIf="dayCycle == 'day'" src="../../assets/backday.jpg" class="background">
+
+</div>
+
+<audio src="../assets/celtic.mp4" autoplay loop></audio>
+
+<div *ngIf="isOver"
+  style="width: 100vw ; height:100vh ; background: rgba(15, 15, 15, 0.96); ; display: flex ; justify-content: center; align-items: center ; flex-direction: column ; position: absolute ; top: 0px ; z-index: 11">
+
+  <img class="movementwon" style="width: 250px ; height: 250px ; border-radius: 250px" src={{isOver.picture}}>
+
+  <div style="font-size: 20px ; margin-top: 15px ; color: white" class="cinzel">
+    {{isOver.name}} is the winner!
+  </div>
+
+  <div style="font-size: 17px ; margin-top: 20px ; color: white" class="cinzel">
+    "{{isOver.winPhrase}}"
+  </div>
+
+</div>
+
+<div style="position: absolute ; top: 0px ; width: 100% ; max-width: 100%">
+
+
+  <div style="height: 8vh ; width: 100% ; display: flex;">
+
+    <div class="cinzel" style="width: 300px;
+    height: 20px;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    padding: 25px;
+    background: black;
+    opacity: 0.8;
+    color: white;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin-top: 60px">
+      <span class="cinzel" *ngIf="dayCycle == 'night'">The sun rises </span> <span class="cinzel"
+        *ngIf="dayCycle == 'day'">Dusk approaches </span>
+      <span class="cinzel" style="margin-left: 5px"> in {{howMuchUntilNext()}} turns </span>
+      <span *ngIf="dayCycle == 'day'"><img style="width: 16px ; margin-left: 20px" src="../../assets/moon.png"></span>
+      <span *ngIf="dayCycle == 'night'"><img style="width: 16px ; margin-left: 20px ; margin-top: 3px"
+          src="../../assets/sun.png"></span>
+    </div>
+
+  </div>
+
+  <div style="position: absolute;top: 20%;left: 1%; display: flex; align-items: center; cursor: pointer" [matTooltip]="'See the shop'" (click)="seeShop()" [ngClass]="waitingForEnemy || showingTurns? 'disabled': 'null'">
+    <div style="height: 65px;
+      width: 65px;
+      border-radius: 100px;
+      background: linear-gradient(0deg, rgb(106, 106, 106) 0%, rgb(80, 80, 80) 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 7.5px solid black; z-index: 3">
+      <img style="height: 30px ; width: 30px" src="../../assets/goldbag.png">
+    </div>
+    <div style="background: rgba(0, 0, 0, 0.618);
+    padding: 10px;
+    width: 90px;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    margin-left: -15px;">
+      <span class="cinzel" style="font-size: 20px ; color: rgb(225, 158, 34) ; text-shadow: 2px 2px #000; margin-left: 20px ; font-weight: 600">{{currentGold}} <img style="width: 10px; height: 10px ; margin-left: 5px" 
+        src="../../assets/coins.png"></span>
+    </div>
+
+
+  </div>
+
+  <div *ngIf="showInfo">
+    <div style="padding: 25px;
+      width: 10vw;
+      background: rgba(0, 0, 0, 0.494);
+      color: white;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      position: absolute;
+      flex-direction: column;
+      top: 30%;
+      left: 2%;">
+      <div>
+        <img style="width: 60px ; height: 60px ; border-radius: 100px" src="{{showInfo.image}}">
+      </div>
+      <div>
+
+        <div class="cinzel" style="font-size: 18px ; width: 105% ; display: flex; justify-content: center">
+          {{showInfo.name}}
+        </div>
+
+        <div style="font-size: 15px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        margin-top: 10px;
+        width: 100%;
+        align-items: center;
+        ">
+
+          <!--div class="cinzel">Cooldown:</div><span>{{showInfo.cooldown}}</span-->
+          <div class="cinzel">Cost:</div><span>{{dayCycle == 'day' ? showInfo.cost : showInfo.ncost}}</span>
+          <div class="cinzel">Priority:</div><span>{{showInfo.priority}}</span>
+        </div>
+        <div style="font-size: 15px ; margin-top: 20px">
+          <div class="cinzel">{{showInfo.description}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div style="height: 20vh ; width: 100% ; display: flex; justify-content: center">
+
+    <div style="width: 4% ; display: flex ; align-items: center ; height: 100%">
+      <div style="height: 40px ;  background: none ; width: 100% ">
+        <!--buffs-->
+        <div *ngFor="let bf of getUserBuffs(this.enemy)" style="display: flex">
+          <div [matTooltip]="bf.descrip">
+            <img
+              style="height: 30px; width: 30px ; border-radius: 100px ; margin-left: 20px ; margin-right: 20px ; border: 2px solid black"
+              [src]="bf.icon">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex ; justify-content: center ; flex-direction: column ; align-items:center">
+
+      <img class="player-pic" [src]="enemy.picture" style="margin-top: 10px">
+
+      <div class="dancing chip" style="margin-top: -30px">
+        {{enemy.chealth}}
+      </div>
+
+      <div class="popup-enemy enemypopupAnim cinzel" *ngIf="enemyDamagePopUp"> - {{enemyDamagePopUp}}</div>
+
+    </div>
+
+    <div style="width: 4% ; display: flex ; align-items: center ; height: 100%">
+      <div style="height: 40px ;  background: none ; width: 100% ">
+        <!--buffs-->
+        <div *ngFor="let bf of getUserDebuffs(this.enemy)" style="display: flex">
+          <div [matTooltip]="bf.descrip">
+            <img
+              style="height: 30px; width: 30px ; border-radius: 100px ; margin-left: 20px ; margin-right: 20px ; border: 2px solid black"
+              [src]="bf.icon">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="height: 32vh ; width: 100% ; display: flex; justify-content: center ; align-items: center">
+
+    <div class="fadeIn example-container"
+      style="margin-bottom: 10px; border: 5px #00000080 solid; border-radius: 25px; padding: 8px ; background: #0000008f; height: 61%"
+      [ngClass]="waitingForEnemy || showingTurns? 'noShow' : ''">
+
+      <div cdkDropList #todoList="cdkDropList" cdkDropListOrientation="horizontal" [cdkDropListData]="toUse"
+        [cdkDropListConnectedTo]="[doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of toUse" cdkDrag>
+          <div style="width: 100%" (mouseover)="openTooltip(item,this)" (mouseleave)="closeTooltip(item,this)">
+
+            <div><img style="width: 30px;
+          height: 30px;
+          border: 5px black solid;
+          border-radius: 25px;" src="{{item.image}}"></div>
+
+            <div class="cinzel" style="font-size: 13px ; word-spacing: 3px ; color: white ; height: 50px ; display: flex;
+        justify-content: center;
+        align-items: center;">
+              {{item.name.toUpperCase()}}</div>
+
+            <div style="display: flex ; width: 100%">
+
+              <div style="width: 100%; display: flex; justify-content: center ; margin-top: 9px;">
+                <div class=" tear">
+                  <div class="cinzel" style="transform: rotate(45deg);
+              margin: 5px ; font-size: 25px; color: white;">
+                    {{dayCycle == 'day' ? item.cost : item.ncost}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--div style="color: red; font-size: 10px" *ngIf="item.current_cooldown > 0">I'm on cooldown</div-->
+          </div>
+        </div>
+      </div>
+
+      <div style="width: 100% ; height: 80% ; display: flex ; justify-content: center ; align-items: center">
+        <div class="tear fadeIn" *ngIf="!waitingForEnemy && !showingTurns" style="width: 60px ; height: 60px; border: black solid 3px ; margin-top: -45px ; margin-bottom: 5px ; background: rgb(33,41,79);
+      background: radial-gradient(circle, rgb(41, 48, 80) 0%, rgb(4, 55, 221) 100%);">
+          <div class="cinzel" style="transform: rotate(45deg); font-size: 20px;color: white; margin-top: 20px;font-weight: 600; 
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center; ">
+            {{totalAbilityCost()}} / {{player.ap}}
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div *ngIf="showingTurns">
+
+
+      <div class="example-box" [ngClass]="{'attackEnemy': typeEvent == 'damage' && isPlayer , 
+      'attackPlayer': typeEvent == 'damage' && !isPlayer,
+      'movement': typeEvent == 'status' || typeEvent == 'heal',
+       'won': typeEvent == 'won'
+      }">
+        <div>
+          <div style="width: 100%">
+
+            <div><img style="width: 30px;
+              height: 30px;
+              border: 5px black solid;
+              border-radius: 25px;" src="{{currentStatus.image}}"></div>
+
+            <div class="cinzel" style="font-size: 13px ; word-spacing: 3px ; color: white ; height: 50px ; display: flex;
+            justify-content: center;
+            align-items: center;">
+              {{currentStatus.name.toUpperCase()}}</div>
+
+            <div style="display: flex ; width: 100%">
+
+              <div style="width: 100%; display: flex; justify-content: center ; margin-top: 9px;">
+                <div class="tear">
+                  <div class="cinzel" style="transform: rotate(45deg);
+                  margin: 5px ; font-size: 25px; color: white;">
+                    {{dayCycle == 'day' ? currentStatus.cost : currentStatus.ncost}}
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+
+    <div *ngIf="waitingForEnemy"
+      style="display: flex; align-items: center ; flex-direction: column ; margin-bottom: 70px;">
+      <img style="width: 130px ; height: 80px" src="../assets/loader.gif">
+      <h1 class="cinzel" style="color: white">
+        Waiting for enemy...
+      </h1>
+    </div>
+
+  </div>
+
+  <div style="position: absolute ; top: 78% ; left: 22% ; cursor: pointer" (click)="grabCard()"
+    [ngClass]="canGrab()? null: 'disabled'" [matTooltip]="'Spend 3 mana and grab a card'">
+
+    <div class="dancing chip" style="margin-bottom: -30px ; background: black ; margin-bottom: -30px;
+    background: black;
+    z-index: 10;
+    position: relative;
+    margin-left: 30px">
+      {{playerDeck.length - alreadySelected.length}}
+    </div>
+
+    <div class="example-box" style="cursor: pointer">
+      <img style="width: 70px ; height: 70px ; opacity: 0.1" src="../assets/floor.png">
+    </div>
+  </div>
+
+
+  <div style="height: 19vh ; width: 100% ; display: flex; justify-content: center">
+
+    <div style="width: 4% ; display: flex ; align-items: center ; height: 100%">
+      <div style="height: 40px ;  background: none ; width: 100% ">
+        <!--debuffs-->
+        <div *ngFor="let bf of getUserDebuffs(this.player)" style="display: flex">
+          <div [matTooltip]="bf.descrip">
+            <img
+              style="height: 30px; width: 30px ; border-radius: 100px ; margin-left: 20px ; margin-right: 20px ; border: 2px solid black"
+              [src]="bf.icon">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex ; justify-content: center ; flex-direction: column ; align-items:center">
+
+      <div class="popup-player playerpopupAnim cinzel" *ngIf="playerDamagePopUp">- {{playerDamagePopUp}}</div>
+
+      <div class="dancing chip" style="margin-bottom: -30px">
+        {{player.chealth}}
+      </div>
+
+      <img class="player-pic" [src]="player.picture" style="margin-bottom: 10px">
+    </div>
+
+    <div style="width: 4% ; display: flex ; align-items: center ; height: 100%">
+      <div style="height: 40px ;  background: none ; width: 100% ">
+        <!--buffs-->
+        <div *ngFor="let bf of getUserBuffs(this.player)" style="display: flex">
+          <div [matTooltip]="bf.descrip">
+            <img
+              style="height: 30px; width: 30px ; border-radius: 100px ; margin-left: 20px ; margin-right: 20px ; border: 2px solid black"
+              [src]="bf.icon">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="height: 20vh ; width: 100% ; display: flex; justify-content: center">
+
+    <div class="example-container">
+
+      <div cdkDropList #doneList="cdkDropList" cdkDropListOrientation="horizontal" [cdkDropListData]="currentPlayerHand"
+        class="example-list" [cdkDropListConnectedTo]="[todoList]" (cdkDropListDropped)="drop($event)">
+
+        <div *ngFor="let item of currentPlayerHand">
+
+          <div class="example-box" [cdkDragDisabled]="item.current_cooldown > 0" cdkDrag
+            [ngClass]="item.current_cooldown > 0 ? 'disabledCard' : null">
+
+            <div *ngIf="item.current_cooldown == 0 || !item.current_cooldown">
+              <div style="width: 100%" (mouseover)="openTooltip(item,this)" (mouseleave)="closeTooltip(item,this)">
+
+                <div><img style="width: 30px;
+                height: 30px;
+                border: 5px black solid;
+                border-radius: 25px;" src="{{item.image}}"></div>
+
+                <div class="cinzel" style="font-size: 13px ; word-spacing: 3px ; color: white ; height: 50px ; display: flex;
+              justify-content: center;
+              align-items: center;">
+                  {{item.name.toUpperCase()}}</div>
+
+                <div style="display: flex ; width: 100%">
+
+                  <div style="width: 100%; display: flex; justify-content: center ; margin-top: 9px;">
+                    <div class=" tear">
+                      <div class="cinzel" style="transform: rotate(45deg);
+                    margin: 5px ; font-size: 25px; color: white;">
+                        {{dayCycle == 'day' ? item.cost : item.ncost}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="item.current_cooldown > 0">
+
+              <div style="width: 100%" (mouseover)="openTooltip(item,this)" (mouseleave)="closeTooltip(item,this)">
+
+                <div><img style="width: 30px;
+                height: 30px;
+                border: 5px black solid;
+                border-radius: 25px;" src="{{item.image}}"></div>
+
+                <div class="cinzel" style="font-size: 13px ; word-spacing: 3px ; color: white ; height: 50px ; display: flex;
+              justify-content: center;
+              align-items: center;">
+                  {{item.name.toUpperCase()}}</div>
+
+                <div style="display: flex ; width: 100%">
+
+                  <div style="width: 100%; display: flex; justify-content: center ; margin-top: 9px;">
+                    <img style="width: 30px;
+                  height: 30px;
+                  opacity: 0.2;
+                  margin-left: 10px;
+                  position: relative;
+                  top: -5px;" src="../assets/clock.png">
+                    <span class="cinzel" style="color: white ; position: relative ; left: -18px;
+                  font-size: 22px;
+                  top: 2px;">{{item.current_cooldown}}</span>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+
+    <div style="position: absolute; top: 86% ; left: 87%">
+
+      <button class='button' (click)="playTurn()"
+        [disabled]="totalAbilityCost() > player.ap || isOver || waitingForEnemy || showingTurns">
+        <div class='line'></div>
+        <div class='line'></div>
+        <div class='line'></div>
+        <div class='line'></div>
+        <div class='line'></div>
+        <div class='line'></div>
+        <span>PLAY TURN</span>
+      </button>
+
+    </div>
+
+
+  </div>
+
+
+
+  <div style="position: absolute;
+  left: 85vw;
+  max-height: 571px;
+  top: 13vh;
+  overflow-y: scroll;
+  width: 14%;">
+
+    <div *ngFor="let turn of generateTurnList()">
+
+      <div
+        style="padding: 10px ; font-size: 20px ; background: rgba(0, 0, 0, 0.5); font-weight: 600 ; margin-top: 10px ; margin-bottom: 10px ; color: white">
+        Turn {{turn}}
+      </div>
+      <div *ngFor="let action of getLogTurn(turn)" style="font-size: 11px; color: white ; background: #0000002b;
+        padding: 8px;">
+        {{action.text}}
+      </div>
+
+    </div>
+
+    <div #end style="height: 1px">
+
+    </div>
+
+  </div>
+
+</div>

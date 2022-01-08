@@ -1,0 +1,611 @@
+$line-size: 1px;
+$delay1: .5s;
+$delay2: .9s;
+$distance: -1px;
+
+.container {
+  width: 100%
+}
+
+
+
+.chip {
+  font-size: 28px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  background: #8e0606;
+  color: white;
+  z-index: 2;
+  border: 5px black solid;
+  text-shadow: 2px 2px #000;
+}
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 20px solid rgb(31, 31, 31);
+}
+
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 20px solid rgb(31, 31, 31);
+  margin-top: 20px
+}
+
+.player-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 250px;
+  border: 7px black solid;
+  box-shadow: 0px 0px 29px 2px #000;
+}
+
+#stuff {
+  opacity: 0.0;
+  -webkit-transition: all 500ms ease-in-out;
+  -moz-transition: all 500ms ease-in-out;
+  -ms-transition: all 500ms ease-in-out;
+  -o-transition: all 500ms ease-in-out;
+  transition: all 500ms ease-in-out;
+}
+
+#hover {
+  width: 80px;
+  height: 20px;
+  background-color: green;
+  margin-bottom: 15px;
+}
+
+#hover:hover+#stuff {
+  opacity: 1.0;
+}
+
+
+.example-list {
+  min-height: 165px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 4px;
+  width: 65vw;
+  background: none;
+  max-height: 165px;
+  justify-content: center
+}
+
+.example-box {
+  padding: 20px 0px;
+  background: rgb(61, 61, 61);
+  background: linear-gradient(0deg, #192e4e 0%, #000 80%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  font-size: 14px;
+  flex-grow: 1;
+  flex-basis: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100px;
+  max-width: 100px;
+  height: 155px;
+  max-height: 155px;
+  border-radius: 13px;
+  border: 4px #0000008f solid;
+}
+
+.noShow{
+  display: none
+}
+.tear {
+  display: inline-block;
+  transform: rotate(-45deg);
+  background: #005c80;
+  width: 30px;
+  height: 30px;
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+.disabledCard{
+  background: linear-gradient(0deg, #0d0d0d 0%, #4f4e4e 100%);
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 13px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.button:disabled{
+  width: 200px;
+  height: 50px;
+  position: absolute;
+  border: solid rgba(255, 255, 255, 0.418) 1px;
+  background: rgba(128, 128, 128, 0.274);
+  cursor: pointer;
+  pointer-events: none
+}
+
+.button {
+  width: 200px;
+  height: 50px;
+  position: absolute;
+  border: solid rgba(255, 255, 255, 0.418) 1px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 1s;
+
+  span {
+    position: absolute;
+    top: 15px;
+    left: 60px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    opacity: 0.7;
+  }
+
+  .line {
+    background: white;
+    position: absolute;
+    transition: none;
+    transform: scale(0);
+    opacity: 1;
+  }
+
+
+  .line:nth-child(1) {
+    transform-origin: 100% 100%;
+    height: $line-size;
+    width: 20%;
+    bottom: 0;
+  }
+
+
+  .line:nth-child(4) {
+    transform-origin: 0 100%;
+    height: $line-size;
+    width: 20%;
+    top: $distance;
+    right: 0;
+  }
+
+
+  .line:nth-child(2) {
+    transform-origin: 100% 100%;
+    height: 100%;
+    width: $line-size;
+    bottom: 0;
+    left: $distance;
+  }
+
+
+  .line:nth-child(5) {
+    transform-origin: 100% 0;
+    height: 100%;
+    width: $line-size;
+    bottom: 0;
+    right: $distance;
+  }
+
+
+  .line:nth-child(3) {
+    transform-origin: 0 100%;
+    height: $line-size;
+    width: 100%;
+    top: $distance;
+    left: $distance;
+  }
+
+
+  .line:nth-child(6) {
+    transform-origin: 100% 0;
+    height: $line-size;
+    width: 100%;
+    bottom: 0;
+    right: $distance;
+  }
+
+  &:hover>.line {
+    transform: scale(1);
+    opacity: 0;
+    transition: all 1s;
+  }
+
+  &:hover>.line:nth-child(2),
+  &:hover>.line:nth-child(5) {
+    transition-delay: $delay1;
+  }
+
+  &:hover>.line:nth-child(3),
+  &:hover>.line:nth-child(6) {
+    transition-delay: $delay2;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .tear {
+    width: 50px;
+    height: 50px;
+    border-radius: 0 50% 50% 50%;
+    border: 3px solid black;
+    transform: rotate(45deg);
+    margin-top: 20px;
+  }
+}
+
+
+
+@keyframes fadeInAnimationPlayer {
+  0% {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  75% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInAnimationEnemy {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  75% {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes attackEn {
+  0% {
+    opacity: 0;
+  }
+
+  5%{
+    opacity: 1;
+    transform: translateY(10px);
+  }
+
+  10% {
+    transform: translateY(-75px);
+  }
+
+  20% {
+    transform: translateY(20px);
+  }
+
+  75% {
+    opacity: 1;
+
+  }
+
+  90% {
+    opacity: 1;
+
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes attackPl {
+  0% {
+    opacity: 0;
+  }
+
+  5%{
+    opacity: 1;
+    transform: translateY(-10px);
+  }
+
+  10% {
+    transform: translateY(75px);
+  }
+
+  20% {
+    transform: translateY(-20px);
+  }
+
+  75% {
+    opacity: 1;
+
+  }
+
+  90% {
+    opacity: 1;
+
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes moveSideAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  5%{
+    opacity: 1;
+  }
+
+  25%{
+    transform: translateY(5px);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+
+  75% {
+    transform: translateY(5px);
+  }
+
+  90%{
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-5px);
+    opacity: 0;
+  }
+}
+
+@keyframes moveSideAnimationWon {
+
+  5%{
+    opacity: 1;
+  }
+
+  25%{
+    transform: translateY(5px);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+
+  75% {
+    transform: translateY(5px);
+  }
+
+  90%{
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-5px);
+  }
+}
+
+
+@keyframes wonAnim {
+  0% {
+    opacity: 0;
+  }
+
+  5%{
+    opacity: 1;
+  }
+
+  25%{
+    transform: translateY(5px);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+
+  75% {
+    transform: translateY(5px);
+  }
+
+  100% {
+    transform: translateY(-5px);
+  }
+}
+
+
+@keyframes popUpAnimationEnemy {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+
+@keyframes popUpAnimationPlayer {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+
+.disabled{
+  pointer-events: none;
+}
+
+.popup-enemy{
+  margin: 50px;
+  font-size: 40px;
+  color: rgb(173, 0, 0);
+  text-shadow: 2px 2px #000;
+  position: absolute;
+  top: 200px;
+}
+
+.popup-player{
+  margin: 50px;
+  font-size: 40px;
+  color: rgb(173, 0, 0);
+  text-shadow: 2px 2px #000;
+  position: absolute;
+  top: 470px;
+
+}
+
+.playerpopupAnim{
+  animation: popUpAnimationPlayer ease 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.enemypopupAnim{
+  animation: popUpAnimationEnemy ease 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+#image-container {
+  background: url(http://pic2.ooopic.com/11/26/30/31b1OOOPIC48.jpg) left top no-repeat;
+  box-shadow: 25px 25px 50px 0 white inset, -25px -25px 50px 0 white inset; 
+  width: 300px;
+  height: 300px;
+}
+  
+.movement{
+  animation: moveSideAnimation ease 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.movementwon{
+  animation: moveSideAnimationWon ease 3s;
+  animation-iteration-count:infinite;
+  animation-fill-mode: forwards;
+}
+
+.won{
+  animation: wonAnim ease infinite;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.fadeIn{
+  animation: fadeInAnimation ease 0.25s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.attackEnemy {
+  animation: attackEn ease 3s;
+  animation-fill-mode: forwards;
+  animation-iteration-count:infinite;
+}
+
+.attackPlayer {
+  animation: attackPl ease 3s;
+  animation-fill-mode: forwards;
+  animation-iteration-count:infinite;
+}
+
+
+.msg {
+  animation: fadeInAnimationPlayer ease 7s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.enemyMsg {
+  display: hidden;
+  animation: fadeInAnimationEnemy ease 7s;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;  
+  animation-delay: 4s;
+}
+
+.enemyCard{
+  background: linear-gradient(0deg, #000 0%, #b42323 100%); border: 5px #000000b5 solid ; cursor: default
+}

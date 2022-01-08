@@ -1,0 +1,38 @@
+<div *ngIf="!waitingForSomeone">
+  <div style="margin: 20px">
+    <input [(ngModel)]="currentRoomName"> 
+    <button style="margin-left: 10px" [disabled]="!currentRoomName" (click)="createRoom()">Create</button>
+    <button (click)="getBattles()">
+      refresh
+    </button>
+  </div>
+
+  <div *ngIf="loading" style="margin: 20px">
+    loading...
+  </div>
+
+  <div *ngIf="!loading">
+    <div *ngFor="let room of currentRooms">
+      <div
+        style="width: 50% ; background: rgb(179, 179, 179) ; display: flex; align-content: center ; padding: 20px ; margin: 10px">
+        {{room.data.name}} [versus {{room.vs?.name}}]<button (click)="joinRoom(room)">join</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<button (click)="singlePlayer()">No thanks, just play against the machine</button>
+
+<div *ngIf="waitingForSomeone && !foundSomeone" style="margin: 20px">
+
+  Waiting for someone to connect to the {{currentRoomName}} lobby... 
+  <button (click)="cancel()">cancel search</button>
+
+</div>
+
+<div *ngIf="foundSomeone" style="margin: 20px">
+
+  A battler has been found! Starting match...
+
+</div>
